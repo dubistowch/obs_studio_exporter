@@ -430,14 +430,14 @@ func registerMetrics() {
 
 //export obs_module_load
 func obs_module_load() C.bool {
-	fmt.Fprintf("[obs-studio-exporter]: obs_module_load")
+	log.Println("[obs-studio-exporter]: obs_module_load")
 	registerMetrics()
-	fmt.Fprintf("[obs-studio-exporter]: registerMetrics")
+	log.Println("[obs-studio-exporter]: registerMetrics")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "You have reached obs-studio-exporter. Please leave a message after the beep.")
 	})
 	http.Handle("/metrics", promhttp.Handler())
-	fmt.Fprintf("[obs-studio-exporter]: listen port")
+	log.Println("[obs-studio-exporter]: listen port")
 	go func() {
 		for port := 9407; port < 9500; port++ {
 			log.Println("Trying port %d...", port)
